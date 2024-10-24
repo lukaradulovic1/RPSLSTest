@@ -1,0 +1,87 @@
+body {
+  font-family: Helvetica, sans-serif;
+  padding: 5%;
+  text-align: center;
+  font-size: 50px;
+}
+
+/* Styling the area of the slides */
+#slideshow {
+  overflow: hidden;
+  width: 500px;
+  margin: 0 auto;
+}
+
+/* Style each of the sides 
+  with a fixed width and height */
+.slide {
+  float: left;
+  height: 450px;
+  width: 500px;
+}
+
+/* Add animation to the slides */
+.slide-wrapper {
+  /* Calculate the total width on the
+    basis of number of slides */
+  width: calc(500px * 5);
+
+  /* Specify the animation with the
+    duration and speed */
+  animation: slide 4s ease infinite;
+}
+
+/* Set the background color
+  of each of the slides */
+.slide:nth-child(1) {
+  background: white;
+}
+
+.slide:nth-child(2) {
+  background: white;
+}
+
+.slide:nth-child(3) {
+  background: white;
+}
+
+.slide:nth-child(4) {
+  background: white;
+}
+
+.slide:nth-child(5) {
+  background: white;
+}
+
+/* Define the animation 
+  for the slideshow */
+@keyframes slide {
+  /* Calculate the margin-left for 
+    each of the slides */
+  20% {
+    margin-left: 0px;
+  }
+
+  40% {
+    margin-left: calc(-500px * 1);
+  }
+
+  60% {
+    margin-left: calc(-500px * 2);
+  }
+
+  80% {
+    margin-left: calc(-500px * 3);
+  }
+  100% {
+    margin-left: calc(-500px * 4);
+  }
+}
+
+#player-wins,
+#cpu-wins,
+#score-draw,
+#play-again,
+#round-declaration {
+  display: none;
+}

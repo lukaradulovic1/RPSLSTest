@@ -1,0 +1,170 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+  <body>
+    <div id="slideshow">
+      <div class="slide-wrapper">
+        <div class="slide">
+          <h1 class="slide-number">Rock</h1>
+          <img src="~/css/Assets/rock.png" alt="Rock" />
+        </div>
+        <div class="slide">
+          <h1 class="slide-number">Paper</h1>
+          <img src="~/css/Assets/paper.png" alt="Paper" />
+        </div>
+        <div class="slide">
+          <h1 class="slide-number">Scissors</h1>
+          <img src="~/css/Assets/scissors.png" alt="Scissors" />
+        </div>
+        <div class="slide">
+          <h1 class="slide-number">Lizard</h1>
+          <img src="~/css/Assets/lizard.png" alt="Lizard" />
+        </div>
+        <div class="slide">
+          <h1 class="slide-number">Spock</h1>
+          <img src="~/css/Assets/spock.png" alt="Spock" />
+        </div>
+      </div>
+    </div>
+    <div id="round-declaration">
+        <div id="result">
+            <p>Your Shape: </p>
+            <p>Computer Shape: </p>
+            <p>Result: </p>
+        </div>
+      <div id="player-wins">PLAYER WINS!</div>
+      <div id="cpu-wins">COMPUTER WINS</div>
+      <div id="score-draw">IT'S A DRAW</div>
+    </div>
+    <div id="play-again">PLAY AGAIN?</div>
+
+    <label id="choices-label" for="choices">Choose a shape:</label>
+        <select name="choices" id="choices">
+        <option value="">-</option>
+      </select>
+      <br /><br />
+    <button id="playButton">Play</button>
+
+    <script>
+
+        const shapesDict = {
+            0: "Rock",
+            1: "Paper",
+            2: "Scissors",
+            3: "Lizard",
+            4: "Spock"
+        };
+        function populateChoices() {
+            fetch('/api/game/Choices')
+                .then(response => response.json())
+                .then(data => {
+                    var dropdown = document.getElementById("choices");
+
+                    dropdown.innerHTML = '';
+
+                    var defaultOption = document.createElement("option");
+                defaultOption.value = ""; 
+                defaultOption.text = "-"; 
+                dropdown.appendChild(defaultOption); 
+
+                    data.forEach(choice => {
+                        var option = document.createElement("option");
+                        option.text = choice;               
+                        dropdown.appendChild(option);       
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching choices:', error);
+                });
+        }
+        window.onload = populateChoices;
+
+      const playButton = document.getElementById("playButton");
+      let gamePlayed = false;
+
+        playButton.addEventListener("click", function () {
+        if (!gamePlayed) {
+          var slideshow = document.getElementById("slideshow");
+          console.log("bla");
+          slideshow.style.display = "none";
+          var roundDeclaration = document.getElementById("round-declaration");
+          roundDeclaration.style.display = "block";
+          var playAgainPrompt = document.getElementById("play-again");
+          playAgainPrompt.style.display = "block";
+          var choices = document.getElementById("choices");
+          choices.style.display = "none";
+          var choicesLabel = document.getElementById("choices-label");
+          choicesLabel.style.display = "none";
+
+          playButton.innerHTML = "Play again";
+          gamePlayed = true;
+         play();
+
+
+        } else {
+          var slideshow = document.getElementById("slideshow");
+          console.log("bla");
+          slideshow.style.display = "block";
+          var roundDeclaration = document.getElementById("round-declaration");
+          roundDeclaration.style.display = "none";
+          var declareWinner = document.getElementById("player-wins");
+          declareWinner.style.display = "none";
+          var playAgainPrompt = document.getElementById("play-again");
+          playAgainPrompt.style.display = "none";
+          var choices = document.getElementById("choices");
+          choices.style.display = "block";
+          playButton.innerHTML = "Play";
+
+          gamePlayed = false;
+        }
+      });
+
+        function play() {
+            var selectedChoice = document.getElementById("choices").value;
+
+            if (selectedChoice === "-") {
+                alert("Please select a valid shape.");
+                return; 
+            }
+            fetch('/api/game/play', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    playerChoice: selectedChoice 
+                })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        document.getElementById("result").innerHTML = "Please choose a shape";
+                    }
+
+                    return response.json();
+                })
+                .then(data => {
+                    const playerShapeString = shapesDict[data.playerShape];
+                    const computerShapeString = shapesDict[data.computerShape];
+
+                    document.getElementById("result").innerHTML = `
+                                <p>Your Shape: ${playerShapeString}</p>
+                                <p>Computer Shape: ${computerShapeString}</p>
+                                <p>Result: ${data.result}</p>
+                            `;
+                
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+    </script>
+
+  </body>
+</html>
