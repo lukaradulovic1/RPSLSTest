@@ -1,0 +1,48 @@
+[
+  {
+    "ContainingType": "GameController",
+    "Method": "Choice",
+    "RelativePath": "api/game/Choice",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GameController",
+    "Method": "Choices",
+    "RelativePath": "api/game/Choices",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GameController",
+    "Method": "Index",
+    "RelativePath": "api/game/Index",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GameController",
+    "Method": "Play",
+    "RelativePath": "api/game/Play",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "choice",
+        "Type": "PlayerChoiceModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

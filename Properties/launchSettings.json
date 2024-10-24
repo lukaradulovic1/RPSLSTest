@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "RPSLSTest": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:24766;http://localhost:24767"
+    }
+  }
+}
